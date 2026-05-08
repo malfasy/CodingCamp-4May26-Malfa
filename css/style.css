@@ -1,0 +1,1104 @@
+﻿/* ==========================================================================
+   DailyBuddy Dashboard - style.css
+   Task 3: CSS foundation - layout, theme variables, component styles
+   ========================================================================== */
+
+/* ==========================================================================
+   1. CSS Custom Properties - Light Theme (default)
+   ========================================================================== */
+
+:root {
+  /* Brand / Primary */
+  --color-primary:        #e91e8c;
+  --color-primary-hover:  #c4176f;
+  --color-primary-light:  #fce4f3;
+  --color-secondary:      #7c3aed;
+  --color-secondary-hover:#6d28d9;
+
+  /* Backgrounds */
+  --color-bg:             #f5f0fa;
+  --color-surface:        #ffffff;
+  --color-surface-alt:    #fdf6ff;
+  --color-border:         #e2d9f3;
+
+  /* Text */
+  --color-text:           #1a1025;
+  --color-text-muted:     #6b5b7e;
+  --color-text-inverse:   #ffffff;
+
+  /* Semantic */
+  --color-success:        #16a34a;
+  --color-error:          #dc2626;
+  --color-warning-bg:     #fef3c7;
+  --color-warning-text:   #92400e;
+  --color-warning-border: #fcd34d;
+
+  /* Progress bar */
+  --color-progress-track: #e2d9f3;
+  --color-progress-fill:  #e91e8c;
+
+  /* Spacing */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  /* Border radius */
+  --radius-sm:   0.375rem;
+  --radius-md:   0.75rem;
+  --radius-lg:   1.25rem;
+  --radius-xl:   1.75rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm:  0 1px 3px rgba(100, 50, 120, 0.08), 0 1px 2px rgba(100, 50, 120, 0.06);
+  --shadow-md:  0 4px 12px rgba(100, 50, 120, 0.12), 0 2px 6px rgba(100, 50, 120, 0.08);
+  --shadow-lg:  0 10px 30px rgba(100, 50, 120, 0.16), 0 4px 12px rgba(100, 50, 120, 0.10);
+  --shadow-modal: 0 20px 60px rgba(100, 50, 120, 0.25), 0 8px 24px rgba(100, 50, 120, 0.15);
+
+  /* Typography */
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono:   ui-monospace, "Cascadia Code", "Fira Code", monospace;
+  --font-size-xs:   0.75rem;
+  --font-size-sm:   0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg:   1.125rem;
+  --font-size-xl:   1.25rem;
+  --font-size-2xl:  1.5rem;
+  --font-size-3xl:  1.875rem;
+  --font-size-4xl:  2.25rem;
+  --font-size-5xl:  3rem;
+
+  /* Transitions */
+  --transition-fast:   0.15s ease;
+  --transition-base:   0.25s ease;
+  --transition-slow:   0.4s ease;
+  --transition-theme:  background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ==========================================================================
+   2. CSS Custom Properties - Dark Theme overrides
+   ========================================================================== */
+
+body.dark-mode {
+  /* Brand / Primary - slightly brighter for dark bg */
+  --color-primary:        #f06ab5;
+  --color-primary-hover:  #e91e8c;
+  --color-primary-light:  #3d1a2e;
+  --color-secondary:      #a78bfa;
+  --color-secondary-hover:#c4b5fd;
+
+  /* Backgrounds */
+  --color-bg:             #0f0a1a;
+  --color-surface:        #1a1028;
+  --color-surface-alt:    #221535;
+  --color-border:         #3d2a5a;
+
+  /* Text */
+  --color-text:           #f0e8ff;
+  --color-text-muted:     #b09cc8;
+  --color-text-inverse:   #0f0a1a;
+
+  /* Semantic */
+  --color-success:        #4ade80;
+  --color-error:          #f87171;
+  --color-warning-bg:     #2d1f00;
+  --color-warning-text:   #fcd34d;
+  --color-warning-border: #78350f;
+
+  /* Progress bar */
+  --color-progress-track: #3d2a5a;
+  --color-progress-fill:  #f06ab5;
+
+  /* Shadows - deeper for dark mode */
+  --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.25);
+  --shadow-lg:  0 10px 30px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.6), 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+/* ==========================================================================
+   3. Reset and Base Styles
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  min-height: 100vh;
+  transition: var(--transition-theme);
+}
+
+/* ==========================================================================
+   4. Accessibility Utilities
+   ========================================================================== */
+
+/* Screen-reader-only utility - visually hidden but accessible to assistive tech */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus ring - visible for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ==========================================================================
+   5. Storage Warning Banner
+   ========================================================================== */
+
+.storage-warning {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning-text);
+  border-bottom: 1px solid var(--color-warning-border);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  text-align: center;
+  justify-content: center;
+  transition: var(--transition-theme);
+}
+
+.storage-warning[hidden] {
+  display: none;
+}
+
+/* ==========================================================================
+   6. Dashboard Layout
+   ========================================================================== */
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Hero card spans full width */
+.hero-card {
+  grid-column: 1 / -1;
+}
+
+/* Responsive grid for the secondary cards */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+  margin-top: var(--space-6);
+}
+
+/* On wider screens, give timer and tasks more room */
+@media (min-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Tasks card spans 2 columns on large screens */
+  .tasks-card {
+    grid-column: span 2;
+  }
+}
+
+/* ==========================================================================
+   7. Card Component
+   ========================================================================== */
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-theme);
+}
+
+.card-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.01em;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.card-header .card-title {
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   8. Hero Card - Clock and Greeting
+   ========================================================================== */
+
+.hero-card {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  border-color: transparent;
+  color: var(--color-text-inverse);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-4);
+  padding: var(--space-10) var(--space-6);
+}
+
+@media (min-width: 600px) {
+  .hero-card {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+.clock-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.clock-time {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-5xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--color-text-inverse);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 480px) {
+  .clock-time {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+.clock-date {
+  font-size: var(--font-size-base);
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
+}
+
+.greeting-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@media (max-width: 599px) {
+  .greeting-section {
+    justify-content: center;
+  }
+}
+
+.greeting {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  color: var(--color-text-inverse);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  line-height: 1.3;
+}
+
+@media (min-width: 600px) {
+  .greeting {
+    font-size: var(--font-size-3xl);
+    text-align: right;
+  }
+}
+
+/* ==========================================================================
+   9. Button Components
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.4;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast),
+              box-shadow var(--transition-fast),
+              transform var(--transition-fast);
+  user-select: none;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Primary button */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  box-shadow: 0 2px 8px rgba(233, 30, 140, 0.35);
+}
+
+.btn-primary:focus-visible {
+  outline-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.25);
+}
+
+/* Secondary button */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--color-primary-light);
+  box-shadow: 0 2px 6px rgba(233, 30, 140, 0.15);
+}
+
+.btn-secondary:focus-visible {
+  box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.2);
+}
+
+/* Icon button - compact, no border */
+.btn-icon {
+  background-color: transparent;
+  color: var(--color-text-muted);
+  border-color: transparent;
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-sm);
+}
+
+.btn-icon:hover:not(:disabled) {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+/* Danger variant (for delete actions) */
+.btn-danger {
+  background-color: transparent;
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: var(--color-error);
+  color: var(--color-text-inverse);
+}
+
+/* ==========================================================================
+   10. Form Elements - Inputs
+   ========================================================================== */
+
+input[type="text"],
+input[type="number"],
+input[type="url"],
+.task-input,
+.settings-input {
+  display: block;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast),
+              box-shadow var(--transition-fast),
+              background-color var(--transition-base);
+  outline: none;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="url"]:focus,
+.task-input:focus,
+.settings-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.15);
+}
+
+input[type="text"]::placeholder,
+input[type="url"]::placeholder,
+.task-input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+/* Narrow number input for timer duration */
+.settings-input--narrow {
+  width: 80px;
+}
+
+/* ==========================================================================
+   11. Timer Card
+   ========================================================================== */
+
+.timer-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-4);
+}
+
+.timer-card .card-title {
+  margin-bottom: 0;
+}
+
+.timer-display {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--color-primary-light);
+  border-radius: var(--radius-lg);
+  min-width: 160px;
+  transition: color var(--transition-base), background-color var(--transition-base);
+}
+
+.timer-controls {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   12. Tasks Card
+   ========================================================================== */
+
+.tasks-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Progress bar container */
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background-color: var(--color-progress-track);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  transition: background-color var(--transition-base);
+}
+
+/* Progress bar fill - animated width transition */
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  border-radius: var(--radius-full);
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color var(--transition-base);
+  min-width: 0;
+}
+
+.progress-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: 500;
+  transition: color var(--transition-base);
+}
+
+/* Task add form */
+.task-form {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.task-form .task-input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Task error message */
+.task-error {
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+  font-weight: 500;
+  padding: var(--space-1) 0;
+}
+
+.task-error[hidden] {
+  display: none;
+}
+
+/* Task list */
+.task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: var(--space-1);
+}
+
+/* Scrollbar styling */
+.task-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.task-list::-webkit-scrollbar-track {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+.task-list::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+}
+
+/* Individual task item */
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.task-item:hover {
+  border-color: var(--color-primary);
+}
+
+.task-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.task-item-text {
+  flex: 1;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  word-break: break-word;
+  transition: color var(--transition-fast);
+}
+
+.task-item--done .task-item-text {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+.task-item-delete {
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.task-item:hover .task-item-delete,
+.task-item:focus-within .task-item-delete {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   13. Links Card
+   ========================================================================== */
+
+.links-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.links-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 40px;
+}
+
+/* Individual link button wrapper */
+.link-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* The main link button */
+.link-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-surface-alt);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              color var(--transition-fast);
+  font-family: var(--font-family);
+  word-break: break-word;
+}
+
+.link-btn:hover {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Edit/delete icon buttons revealed on hover */
+.link-actions {
+  display: flex;
+  gap: var(--space-1);
+  margin-left: var(--space-2);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.link-item:hover .link-actions,
+.link-item:focus-within .link-actions {
+  opacity: 1;
+}
+
+/* Inline add/edit link form */
+.link-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-base), border-color var(--transition-base);
+}
+
+.link-form-row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.link-form-row .btn {
+  flex-shrink: 0;
+}
+
+.link-form-error {
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+  font-weight: 500;
+}
+
+.link-form-error:empty {
+  display: none;
+}
+
+/* ==========================================================================
+   14. Settings Card
+   ========================================================================== */
+
+.settings-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.settings-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.settings-row {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.settings-row .settings-input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ==========================================================================
+   15. Modal - Backdrop and Card
+   ========================================================================== */
+
+/* Semi-transparent full-viewport backdrop */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 10, 26, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 100;
+  animation: fadeIn var(--transition-base) ease;
+}
+
+/* Modal card - centered, scrollable */
+.edit-tasks-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 101;
+  width: min(600px, calc(100vw - 2rem));
+  max-height: min(80vh, 640px);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-modal);
+  overflow: hidden;
+  animation: slideUp var(--transition-base) ease;
+  transition: background-color var(--transition-base), border-color var(--transition-base);
+}
+
+/* Modal header */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  background-color: var(--color-surface);
+  transition: background-color var(--transition-base), border-color var(--transition-base);
+}
+
+.modal-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xl);
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  line-height: 1;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.modal-close:hover {
+  color: var(--color-text);
+  background-color: var(--color-primary-light);
+}
+
+/* Sort controls */
+.modal-sort-controls {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  background-color: var(--color-surface-alt);
+  transition: background-color var(--transition-base), border-color var(--transition-base);
+}
+
+.sort-btn {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  background-color: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-family: var(--font-family);
+  transition: background-color var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+.sort-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.sort-btn--active {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
+}
+
+/* Scrollable task list inside modal */
+.modal-task-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.modal-task-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.modal-task-list::-webkit-scrollbar-track {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+.modal-task-list::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+}
+
+/* Modal task row */
+.modal-task-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.modal-task-row:hover {
+  border-color: var(--color-primary);
+}
+
+.modal-task-label {
+  flex: 1;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  word-break: break-word;
+}
+
+.modal-task-label--done {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+/* Inline edit input inside modal row */
+.modal-task-edit-input {
+  flex: 1;
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  outline: none;
+  font-family: var(--font-family);
+  box-shadow: 0 0 0 2px rgba(233, 30, 140, 0.15);
+}
+
+.modal-task-row-error {
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+  margin-top: var(--space-1);
+  display: block;
+}
+
+/* Modal footer */
+.modal-footer {
+  padding: var(--space-3) var(--space-6);
+  border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
+  background-color: var(--color-surface);
+  transition: background-color var(--transition-base), border-color var(--transition-base);
+}
+
+/* ==========================================================================
+   16. Animations
+   ========================================================================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 16px));
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* ==========================================================================
+   17. Notification Banner (in-page timer complete notification)
+   ========================================================================== */
+
+.notification-banner {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  z-index: 200;
+  max-width: 360px;
+  padding: var(--space-4) var(--space-5);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.notification-banner-close {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+  line-height: 1;
+  padding: 0;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.notification-banner-close:hover {
+  color: var(--color-text-inverse);
+}
+
+/* ==========================================================================
+   18. Responsive Adjustments
+   ========================================================================== */
+
+@media (max-width: 480px) {
+  .dashboard {
+    padding: var(--space-4) var(--space-3);
+  }
+
+  .card {
+    padding: var(--space-4);
+  }
+
+  .hero-card {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .timer-display {
+    font-size: var(--font-size-3xl);
+    min-width: 130px;
+  }
+
+  .notification-banner {
+    bottom: var(--space-4);
+    right: var(--space-3);
+    left: var(--space-3);
+    max-width: none;
+  }
+
+  .edit-tasks-modal {
+    width: calc(100vw - 1rem);
+    max-height: 90vh;
+  }
+}
+
+@media (max-width: 360px) {
+  .timer-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .settings-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
