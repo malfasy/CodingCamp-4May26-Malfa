@@ -4,141 +4,138 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'" />
-  <title>DailyBuddy Dashboard</title>
+  <title>DailyBuddy</title>
   <link rel="stylesheet" href="css/style.css" />
   <script src="js/app.js" defer></script>
 </head>
 <body>
-  <!-- localStorage unavailability warning (shown by JS when needed) -->
+
+  <!-- localStorage unavailability warning -->
   <div id="storage-warning" class="storage-warning" hidden>
     ⚠️ Local storage is unavailable. Your data will not be saved between sessions.
   </div>
 
-  <div class="dashboard">
+  <!-- ── Navbar ── -->
+  <nav class="navbar" aria-label="Main navigation">
+    <a class="navbar-brand" href="#" aria-label="DailyBuddy home">
+      <span class="brand-daily">Daily</span><span class="brand-buddy">Buddy</span>
+    </a>
+    <div class="navbar-actions">
+      <button id="theme-toggle" class="btn btn-outline-nav" type="button" aria-label="Toggle light/dark theme">
+        Dark Mode
+      </button>
+      <button id="set-name-btn" class="btn btn-filled-nav" type="button" aria-label="Set your display name">
+        Set Name
+      </button>
+    </div>
+  </nav>
 
-    <!-- Hero Card: Clock + Greeting -->
-    <section class="card hero-card" aria-label="Clock and greeting">
-      <div class="clock-section">
-        <div id="clock-time" class="clock-time" aria-live="polite" aria-label="Current time">00:00:00</div>
-        <div id="clock-date" class="clock-date">Loading date…</div>
+  <!-- ── Set Name modal ── -->
+  <div id="set-name-modal" class="set-name-modal" hidden role="dialog" aria-modal="true" aria-label="Set display name">
+    <div class="set-name-modal-card">
+      <button id="close-name-modal-btn" class="set-name-modal-close" type="button" aria-label="Close">×</button>
+      <h2 class="set-name-modal-title">What's your name?</h2>
+      <div class="set-name-modal-row">
+        <label for="name-input" class="sr-only">Your name</label>
+        <input
+          id="name-input"
+          class="set-name-input"
+          type="text"
+          placeholder="Your name"
+          maxlength="50"
+          autocomplete="off"
+          aria-label="Display name"
+        />
+        <button id="save-name-btn" class="btn btn-filled-nav" type="button">Save</button>
       </div>
-      <div class="greeting-section">
-        <h1 id="greeting" class="greeting">Good Morning, Friend!</h1>
-      </div>
+    </div>
+  </div>
+
+  <!-- ── Main content ── -->
+  <main class="main-content">
+
+    <!-- Welcome heading -->
+    <h1 id="greeting" class="welcome-heading">Welcome Back, Friend!</h1>
+
+    <!-- Clock hero -->
+    <section class="clock-hero" aria-label="Clock">
+      <span class="sparkle sparkle-left-1"  aria-hidden="true"></span>
+      <span class="sparkle sparkle-left-2"  aria-hidden="true"></span>
+      <span class="sparkle sparkle-left-3"  aria-hidden="true"></span>
+      <div id="clock-time" class="clock-time" aria-live="polite" aria-label="Current time">00:00:00</div>
+      <div id="clock-date" class="clock-date">Loading date…</div>
+      <span class="sparkle sparkle-right-1" aria-hidden="true"></span>
+      <span class="sparkle sparkle-right-2" aria-hidden="true"></span>
+      <span class="sparkle sparkle-right-3" aria-hidden="true"></span>
     </section>
 
-    <div class="dashboard-grid">
+    <!-- Tasks + Timer row -->
+    <div class="main-grid">
 
-      <!-- Timer Card -->
-      <section class="card timer-card" aria-label="Focus timer">
-        <h2 class="card-title">Focus Timer</h2>
-        <div id="timer-display" class="timer-display" aria-live="polite" aria-label="Timer remaining">25:00</div>
-        <div class="timer-controls">
-          <button id="timer-start" class="btn btn-primary" type="button">Start</button>
-          <button id="timer-stop" class="btn btn-secondary" type="button" disabled>Stop</button>
-          <button id="timer-reset" class="btn btn-secondary" type="button">Reset</button>
-        </div>
-      </section>
+      <!-- Tasks card -->
+      <section class="card tasks-card" aria-label="Today's tasks">
 
-      <!-- Tasks Card -->
-      <section class="card tasks-card" aria-label="To-do list">
-        <div class="card-header">
-          <h2 class="card-title">Tasks</h2>
-          <button id="edit-tasks-btn" class="btn btn-icon" type="button" aria-label="Edit tasks">✏️ Edit</button>
+        <!-- Row 1: title + chips -->
+        <div class="tasks-header">
+          <h2 class="card-title">Today's Task</h2>
+          <div class="tasks-header-right">
+            <button id="edit-tasks-btn" class="btn btn-chip" type="button">✏ Edit Tasks</button>
+            <button id="history-btn"    class="btn btn-chip" type="button">History</button>
+          </div>
         </div>
 
-        <!-- Progress Bar -->
-        <div class="progress-container" aria-label="Task progress">
-          <div
-            id="progress-bar"
-            class="progress-bar"
-            role="progressbar"
-            aria-valuenow="0"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            style="width: 0%"
-          ></div>
+        <!-- Row 2: progress bar -->
+        <div class="progress-row">
+          <div class="progress-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div id="progress-bar" class="progress-fill" style="width:0%"></div>
+          </div>
+          <span id="progress-label" class="progress-pct" aria-live="polite">0%</span>
         </div>
-        <div id="progress-label" class="progress-label" aria-live="polite">0% complete</div>
 
-        <!-- Add Task Form -->
-        <form id="task-form" class="task-form" novalidate>
+        <!-- Row 3: Add task form (ABOVE the list) -->
+        <form id="task-form" class="add-task-form" novalidate>
           <label for="task-input" class="sr-only">New task</label>
           <input
             id="task-input"
-            class="task-input"
+            class="add-task-input"
             type="text"
             placeholder="Add a new task…"
             maxlength="200"
             autocomplete="off"
             aria-label="New task description"
           />
-          <button class="btn btn-primary" type="submit">Add</button>
+          <button class="btn btn-add" type="submit">Add</button>
         </form>
         <div id="task-error" class="task-error" role="alert" aria-live="assertive" hidden></div>
 
-        <!-- Task List -->
+        <!-- Row 4: Task list -->
         <ul id="task-list" class="task-list" aria-label="Task list"></ul>
+
       </section>
 
-      <!-- Links Card -->
-      <section class="card links-card" aria-label="Quick links">
-        <h2 class="card-title">Quick Links</h2>
-        <div id="links-panel" class="links-panel">
-          <!-- Link buttons rendered here by LinksModule -->
-        </div>
-        <button id="add-link-btn" class="btn btn-secondary" type="button">+ Add Link</button>
-      </section>
-
-      <!-- Settings Panel -->
-      <section class="card settings-card" aria-label="Settings">
-        <h2 class="card-title">Settings</h2>
-
-        <!-- Display Name -->
-        <div class="settings-group">
-          <label for="name-input" class="settings-label">Display Name</label>
-          <div class="settings-row">
-            <input
-              id="name-input"
-              class="settings-input"
-              type="text"
-              placeholder="Your name"
-              maxlength="50"
-              autocomplete="off"
-              aria-label="Display name"
-            />
-            <button id="set-name-btn" class="btn btn-primary" type="button">Save</button>
-          </div>
-        </div>
-
-        <!-- Theme Toggle -->
-        <div class="settings-group">
-          <span class="settings-label">Theme</span>
-          <button id="theme-toggle" class="btn btn-secondary" type="button" aria-label="Toggle dark/light theme">
-            🌙 Toggle Theme
-          </button>
-        </div>
-
-        <!-- Timer Duration -->
-        <div class="settings-group">
-          <label for="timer-duration-input" class="settings-label">Timer Duration (minutes)</label>
-          <div class="settings-row">
-            <input
-              id="timer-duration-input"
-              class="settings-input settings-input--narrow"
-              type="number"
-              min="1"
-              max="120"
-              value="25"
-              aria-label="Timer duration in minutes"
-            />
-            <button id="set-timer-duration-btn" class="btn btn-primary" type="button">Set</button>
-          </div>
+      <!-- Focus Timer card -->
+      <section class="card timer-card" aria-label="Focus timer">
+        <span class="sparkle sparkle-timer" aria-hidden="true"></span>
+        <h2 class="card-title timer-card-title">Focus Timer</h2>
+        <div id="timer-display" class="timer-display" aria-live="polite" aria-label="Timer remaining">25:00</div>
+        <div class="timer-buttons">
+          <button id="timer-start" class="btn btn-timer btn-timer-start" type="button">Start</button>
+          <button id="timer-stop"  class="btn btn-timer btn-timer-stop"  type="button" disabled>Stop</button>
+          <button id="timer-reset" class="btn btn-timer btn-timer-reset" type="button">Reset</button>
         </div>
       </section>
 
-    </div><!-- /.dashboard-grid -->
-  </div><!-- /.dashboard -->
+    </div><!-- /.main-grid -->
+
+    <!-- Quick Links section -->
+    <section class="card links-card" aria-label="Quick links">
+      <h2 class="card-title">Quick Links</h2>
+      <div id="links-panel" class="links-panel">
+        <!-- Rendered by LinksModule -->
+      </div>
+    </section>
+
+  </main>
 
 </body>
 </html>

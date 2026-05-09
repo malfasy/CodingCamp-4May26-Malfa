@@ -1,130 +1,51 @@
-﻿/* ==========================================================================
-   DailyBuddy Dashboard - style.css
-   Task 3: CSS foundation - layout, theme variables, component styles
-   ========================================================================== */
+/* =============================================================
+   DailyBuddy Dashboard — Main Stylesheet
+   Design: soft lavender/mauve palette, purple-pink accents
+   ============================================================= */
 
-/* ==========================================================================
-   1. CSS Custom Properties - Light Theme (default)
-   ========================================================================== */
-
+/* ─── CSS Custom Properties ─────────────────────────────────── */
 :root {
-  /* Brand / Primary */
-  --color-primary:        #e91e8c;
-  --color-primary-hover:  #c4176f;
-  --color-primary-light:  #fce4f3;
-  --color-secondary:      #7c3aed;
-  --color-secondary-hover:#6d28d9;
+  /* Colors */
+  --bg:              #f5eef8;
+  --surface:         #ffffff;
+  --primary:         #c084c8;
+  --primary-dark:    #9b59b6;
+  --primary-light:   #ede0f5;
+  --text:            #2d1b3d;
+  --text-muted:      #8b6fa0;
+  --border:          #e8d5f0;
 
-  /* Backgrounds */
-  --color-bg:             #f5f0fa;
-  --color-surface:        #ffffff;
-  --color-surface-alt:    #fdf6ff;
-  --color-border:         #e2d9f3;
-
-  /* Text */
-  --color-text:           #1a1025;
-  --color-text-muted:     #6b5b7e;
-  --color-text-inverse:   #ffffff;
-
-  /* Semantic */
-  --color-success:        #16a34a;
-  --color-error:          #dc2626;
-  --color-warning-bg:     #fef3c7;
-  --color-warning-text:   #92400e;
-  --color-warning-border: #fcd34d;
-
-  /* Progress bar */
-  --color-progress-track: #e2d9f3;
-  --color-progress-fill:  #e91e8c;
-
-  /* Spacing */
-  --space-1:  0.25rem;
-  --space-2:  0.5rem;
-  --space-3:  0.75rem;
-  --space-4:  1rem;
-  --space-5:  1.25rem;
-  --space-6:  1.5rem;
-  --space-8:  2rem;
-  --space-10: 2.5rem;
-  --space-12: 3rem;
-
-  /* Border radius */
-  --radius-sm:   0.375rem;
-  --radius-md:   0.75rem;
-  --radius-lg:   1.25rem;
-  --radius-xl:   1.75rem;
-  --radius-full: 9999px;
+  /* Gradients */
+  --gradient-progress: linear-gradient(90deg, #c084c8, #9b59b6);
+  --gradient-clock:    linear-gradient(135deg, #d4a8e0, #b87cc8);
 
   /* Shadows */
-  --shadow-sm:  0 1px 3px rgba(100, 50, 120, 0.08), 0 1px 2px rgba(100, 50, 120, 0.06);
-  --shadow-md:  0 4px 12px rgba(100, 50, 120, 0.12), 0 2px 6px rgba(100, 50, 120, 0.08);
-  --shadow-lg:  0 10px 30px rgba(100, 50, 120, 0.16), 0 4px 12px rgba(100, 50, 120, 0.10);
-  --shadow-modal: 0 20px 60px rgba(100, 50, 120, 0.25), 0 8px 24px rgba(100, 50, 120, 0.15);
+  --shadow-card:  0 2px 12px rgba(155, 89, 182, 0.08);
+  --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.2);
 
-  /* Typography */
-  --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono:   ui-monospace, "Cascadia Code", "Fira Code", monospace;
-  --font-size-xs:   0.75rem;
-  --font-size-sm:   0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg:   1.125rem;
-  --font-size-xl:   1.25rem;
-  --font-size-2xl:  1.5rem;
-  --font-size-3xl:  1.875rem;
-  --font-size-4xl:  2.25rem;
-  --font-size-5xl:  3rem;
+  /* Radii */
+  --radius-card:  16px;
+  --radius-pill:  20px;
+  --radius-sm:    8px;
 
   /* Transitions */
-  --transition-fast:   0.15s ease;
-  --transition-base:   0.25s ease;
-  --transition-slow:   0.4s ease;
-  --transition-theme:  background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  --transition: 0.15s ease;
 }
 
-/* ==========================================================================
-   2. CSS Custom Properties - Dark Theme overrides
-   ========================================================================== */
-
+/* ─── Dark Mode ──────────────────────────────────────────────── */
 body.dark-mode {
-  /* Brand / Primary - slightly brighter for dark bg */
-  --color-primary:        #f06ab5;
-  --color-primary-hover:  #e91e8c;
-  --color-primary-light:  #3d1a2e;
-  --color-secondary:      #a78bfa;
-  --color-secondary-hover:#c4b5fd;
-
-  /* Backgrounds */
-  --color-bg:             #0f0a1a;
-  --color-surface:        #1a1028;
-  --color-surface-alt:    #221535;
-  --color-border:         #3d2a5a;
-
-  /* Text */
-  --color-text:           #f0e8ff;
-  --color-text-muted:     #b09cc8;
-  --color-text-inverse:   #0f0a1a;
-
-  /* Semantic */
-  --color-success:        #4ade80;
-  --color-error:          #f87171;
-  --color-warning-bg:     #2d1f00;
-  --color-warning-text:   #fcd34d;
-  --color-warning-border: #78350f;
-
-  /* Progress bar */
-  --color-progress-track: #3d2a5a;
-  --color-progress-fill:  #f06ab5;
-
-  /* Shadows - deeper for dark mode */
-  --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
-  --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.25);
-  --shadow-lg:  0 10px 30px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
-  --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.6), 0 8px 24px rgba(0, 0, 0, 0.4);
+  --bg:            #1a0f2e;
+  --surface:       #2d1b4e;
+  --surface-alt:   #3d2560;
+  --border:        #5a3a7a;
+  --text:          #f0e8ff;
+  --text-muted:    #c4a8d8;
+  --primary:       #d4a0e0;
+  --primary-dark:  #b87cc8;
+  --primary-light: #4a2a6a;
 }
-/* ==========================================================================
-   3. Reset and Base Styles
-   ========================================================================== */
 
+/* ─── Reset & Base ───────────────────────────────────────────── */
 *,
 *::before,
 *::after {
@@ -135,24 +56,63 @@ body.dark-mode {
 
 html {
   font-size: 16px;
-  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
-  line-height: 1.6;
-  color: var(--color-text);
-  background-color: var(--color-bg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
   min-height: 100vh;
-  transition: var(--transition-theme);
+  transition: background var(--transition), color var(--transition);
 }
 
-/* ==========================================================================
-   4. Accessibility Utilities
-   ========================================================================== */
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
-/* Screen-reader-only utility - visually hidden but accessible to assistive tech */
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--bg);
+}
+
+/* ─── Utility ────────────────────────────────────────────────── */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -165,940 +125,1207 @@ body {
   border: 0;
 }
 
-/* Focus ring - visible for keyboard navigation */
-:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
-}
-
-/* ==========================================================================
-   5. Storage Warning Banner
-   ========================================================================== */
-
+/* ─── Storage Warning Banner ─────────────────────────────────── */
 .storage-warning {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-6);
-  background-color: var(--color-warning-bg);
-  color: var(--color-warning-text);
-  border-bottom: 1px solid var(--color-warning-border);
-  font-size: var(--font-size-sm);
+  background: #fff8e1;
+  color: #7a5c00;
+  border-bottom: 1px solid #ffe082;
+  padding: 8px 32px;
+  font-size: 0.85rem;
   font-weight: 500;
   text-align: center;
-  justify-content: center;
-  transition: var(--transition-theme);
 }
 
-.storage-warning[hidden] {
-  display: none;
+body.dark-mode .storage-warning {
+  background: #3a2e00;
+  color: #ffe082;
+  border-bottom-color: #7a6000;
 }
 
-/* ==========================================================================
-   6. Dashboard Layout
-   ========================================================================== */
+/* ─── Navbar ─────────────────────────────────────────────────── */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 56px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: background var(--transition), border-color var(--transition);
+}
 
-.dashboard {
-  max-width: 1200px;
+.navbar-brand {
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.brand-daily {
+  color: var(--text);
+}
+
+.brand-buddy {
+  color: var(--primary);
+}
+
+.navbar-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-outline-nav {
+  background: transparent;
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+  border-radius: var(--radius-pill);
+  padding: 6px 18px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.btn-outline-nav:hover {
+  background: var(--primary-light);
+}
+
+.btn-filled-nav {
+  background: var(--primary);
+  border: 1.5px solid var(--primary);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  padding: 6px 18px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.btn-filled-nav:hover {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+/* ─── Main Content ───────────────────────────────────────────── */
+.main-content {
+  max-width: 1024px;
   margin: 0 auto;
-  padding: var(--space-6) var(--space-4);
+  padding: 24px 32px;
 }
 
-/* Hero card spans full width */
-.hero-card {
-  grid-column: 1 / -1;
+/* ─── Welcome Heading ────────────────────────────────────────── */
+.welcome-heading {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
-/* Responsive grid for the secondary cards */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-6);
-  margin-top: var(--space-6);
+/* ─── Clock Hero Card ────────────────────────────────────────── */
+.clock-hero {
+  background: var(--gradient-clock);
+  border-radius: 24px; /* rounded-2xl */
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+  padding: 32px 24px;
 }
 
-/* On wider screens, give timer and tasks more room */
-@media (min-width: 768px) {
-  .dashboard-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .dashboard-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  /* Tasks card spans 2 columns on large screens */
-  .tasks-card {
-    grid-column: span 2;
-  }
-}
-
-/* ==========================================================================
-   7. Card Component
-   ========================================================================== */
-
-.card {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-  box-shadow: var(--shadow-md);
-  transition: var(--transition-theme);
-}
-
-.card-title {
-  font-size: var(--font-size-lg);
+.clock-time {
+  font-size: 4rem;
   font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: var(--space-4);
-  letter-spacing: -0.01em;
+  color: #fff;
+  font-family: "Courier New", Courier, monospace;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
+.clock-date {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* Sparkle decorations */
+.sparkle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+}
+
+.sparkle-left-1 {
+  width: 40px;
+  height: 40px;
+  left: 60px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  border-radius: 4px;
+}
+
+.sparkle-left-2 {
+  width: 20px;
+  height: 20px;
+  left: 40px;
+  top: 30%;
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+.sparkle-left-3 {
+  width: 12px;
+  height: 12px;
+  left: 110px;
+  top: 25%;
+  transform: rotate(45deg);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.sparkle-right-1 {
+  width: 50px;
+  height: 50px;
+  right: 80px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  border-radius: 4px;
+}
+
+.sparkle-right-2 {
+  width: 24px;
+  height: 24px;
+  right: 50px;
+  top: 28%;
+  transform: rotate(45deg);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.sparkle-right-3 {
+  width: 14px;
+  height: 14px;
+  right: 140px;
+  top: 65%;
+  transform: rotate(45deg);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Main Grid ──────────────────────────────────────────────── */
+.main-grid {
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* ─── Card Base ──────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+/* ─── Card Header ────────────────────────────────────────────── */
 .card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--space-4);
+  margin-bottom: 16px;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.card-header .card-title {
-  margin-bottom: 0;
-}
-
-/* ==========================================================================
-   8. Hero Card - Clock and Greeting
-   ========================================================================== */
-
-.hero-card {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-  border-color: transparent;
-  color: var(--color-text-inverse);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--space-4);
-  padding: var(--space-10) var(--space-6);
-}
-
-@media (min-width: 600px) {
-  .hero-card {
-    flex-direction: row;
-    justify-content: space-between;
-    text-align: left;
-  }
-}
-
-.clock-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
-
-.clock-time {
-  font-family: var(--font-mono);
-  font-size: var(--font-size-5xl);
+.card-title {
+  font-size: 1.05rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1;
-  color: var(--color-text-inverse);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  color: var(--text);
 }
 
-@media (max-width: 480px) {
-  .clock-time {
-    font-size: var(--font-size-4xl);
-  }
-}
-
-.clock-date {
-  font-size: var(--font-size-base);
-  color: rgba(255, 255, 255, 0.85);
-  font-weight: 400;
-}
-
-.greeting-section {
-  flex: 1;
+.card-header-actions {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-@media (max-width: 599px) {
-  .greeting-section {
-    justify-content: center;
-  }
-}
-
-.greeting {
-  font-size: var(--font-size-2xl);
+/* ─── Chip Buttons ───────────────────────────────────────────── */
+.btn-chip {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 4px 14px;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: var(--color-text-inverse);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-  line-height: 1.3;
+  cursor: pointer;
+  transition: background var(--transition);
+  white-space: nowrap;
 }
 
-@media (min-width: 600px) {
-  .greeting {
-    font-size: var(--font-size-3xl);
-    text-align: right;
-  }
+.btn-chip:hover {
+  background: #d4b8e8;
 }
 
-/* ==========================================================================
-   9. Button Components
-   ========================================================================== */
+body.dark-mode .btn-chip {
+  background: var(--primary-light);
+  color: var(--primary);
+}
 
-.btn {
-  display: inline-flex;
+body.dark-mode .btn-chip:hover {
+  background: var(--surface-alt);
+}
+
+/* ─── Progress Bar ───────────────────────────────────────────── */
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 8px;
+  background: var(--border);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gradient-progress);
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+  min-width: 0;
+}
+
+.progress-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ─── Task List ──────────────────────────────────────────────── */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 4px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition);
+}
+
+.task-item:hover {
+  background: var(--primary-light);
+}
+
+body.dark-mode .task-item:hover {
+  background: var(--surface-alt);
+}
+
+.task-checkbox {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--text);
+  word-break: break-word;
+}
+
+.task-text.done {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.task-error {
+  font-size: 0.78rem;
+  color: #e53e3e;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+body.dark-mode .task-error {
+  color: #fc8181;
+}
+
+/* ─── Add Task Form ──────────────────────────────────────────── */
+.add-task-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.add-task-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.add-task-input::placeholder {
+  color: var(--text-muted);
+}
+
+.add-task-input:focus {
+  border-color: var(--primary);
+}
+
+/* ─── Timer Card ─────────────────────────────────────────────── */
+.timer-card {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
-  font-family: var(--font-family);
-  font-size: var(--font-size-sm);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.timer-label {
+  font-size: 0.85rem;
   font-weight: 600;
-  line-height: 1.4;
-  border: 1px solid transparent;
-  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.timer-display {
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  font-family: "Courier New", Courier, monospace;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 24px;
+}
+
+.timer-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ─── Timer Buttons ──────────────────────────────────────────── */
+.btn-timer {
+  border-radius: var(--radius-pill);
+  padding: 7px 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1.5px solid var(--primary);
   cursor: pointer;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background-color var(--transition-fast),
-              color var(--transition-fast),
-              border-color var(--transition-fast),
-              box-shadow var(--transition-fast),
-              transform var(--transition-fast);
-  user-select: none;
+  transition: background var(--transition), border-color var(--transition),
+    color var(--transition);
+  font-family: inherit;
 }
 
-.btn:active {
-  transform: translateY(1px);
-}
-
-.btn:disabled,
-.btn[disabled] {
+.btn-timer:disabled {
   opacity: 0.45;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-/* Primary button */
-.btn-primary {
-  background-color: var(--color-primary);
-  color: var(--color-text-inverse);
-  border-color: var(--color-primary);
+.btn-timer-start {
+  background: var(--primary);
+  color: #fff;
 }
 
-.btn-primary:hover:not(:disabled) {
-  background-color: var(--color-primary-hover);
-  border-color: var(--color-primary-hover);
-  box-shadow: 0 2px 8px rgba(233, 30, 140, 0.35);
+.btn-timer-start:hover:not(:disabled) {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
 }
 
-.btn-primary:focus-visible {
-  outline-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.25);
+.btn-timer-stop {
+  background: transparent;
+  color: var(--primary);
 }
 
-/* Secondary button */
-.btn-secondary {
-  background-color: transparent;
-  color: var(--color-primary);
-  border-color: var(--color-primary);
+.btn-timer-stop:hover:not(:disabled) {
+  background: var(--primary-light);
 }
 
-.btn-secondary:hover:not(:disabled) {
-  background-color: var(--color-primary-light);
-  box-shadow: 0 2px 6px rgba(233, 30, 140, 0.15);
+.btn-timer-reset {
+  background: transparent;
+  color: var(--primary);
 }
 
-.btn-secondary:focus-visible {
-  box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.2);
+.btn-timer-reset:hover:not(:disabled) {
+  background: var(--primary-light);
 }
 
-/* Icon button - compact, no border */
-.btn-icon {
-  background-color: transparent;
-  color: var(--color-text-muted);
-  border-color: transparent;
-  padding: var(--space-1) var(--space-2);
-  font-size: var(--font-size-sm);
-  border-radius: var(--radius-sm);
-}
-
-.btn-icon:hover:not(:disabled) {
-  background-color: var(--color-primary-light);
-  color: var(--color-primary);
-}
-
-/* Danger variant (for delete actions) */
-.btn-danger {
-  background-color: transparent;
-  color: var(--color-error);
-  border-color: var(--color-error);
-}
-
-.btn-danger:hover:not(:disabled) {
-  background-color: var(--color-error);
-  color: var(--color-text-inverse);
-}
-
-/* ==========================================================================
-   10. Form Elements - Inputs
-   ========================================================================== */
-
-input[type="text"],
-input[type="number"],
-input[type="url"],
-.task-input,
-.settings-input {
-  display: block;
-  width: 100%;
-  padding: var(--space-2) var(--space-3);
-  font-family: var(--font-family);
-  font-size: var(--font-size-sm);
-  color: var(--color-text);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  transition: border-color var(--transition-fast),
-              box-shadow var(--transition-fast),
-              background-color var(--transition-base);
-  outline: none;
-}
-
-input[type="text"]:focus,
-input[type="number"]:focus,
-input[type="url"]:focus,
-.task-input:focus,
-.settings-input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.15);
-}
-
-input[type="text"]::placeholder,
-input[type="url"]::placeholder,
-.task-input::placeholder {
-  color: var(--color-text-muted);
-  opacity: 0.7;
-}
-
-/* Narrow number input for timer duration */
-.settings-input--narrow {
-  width: 80px;
-}
-
-/* ==========================================================================
-   11. Timer Card
-   ========================================================================== */
-
-.timer-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--space-4);
-}
-
-.timer-card .card-title {
-  margin-bottom: 0;
-}
-
-.timer-display {
-  font-family: var(--font-mono);
-  font-size: var(--font-size-4xl);
-  font-weight: 700;
-  color: var(--color-primary);
-  letter-spacing: -0.02em;
-  line-height: 1;
-  padding: var(--space-4) var(--space-6);
-  background-color: var(--color-primary-light);
-  border-radius: var(--radius-lg);
-  min-width: 160px;
-  transition: color var(--transition-base), background-color var(--transition-base);
-}
-
-.timer-controls {
-  display: flex;
-  gap: var(--space-2);
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-/* ==========================================================================
-   12. Tasks Card
-   ========================================================================== */
-
-.tasks-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-/* Progress bar container */
-.progress-container {
-  width: 100%;
-  height: 8px;
-  background-color: var(--color-progress-track);
-  border-radius: var(--radius-full);
-  overflow: hidden;
-  transition: background-color var(--transition-base);
-}
-
-/* Progress bar fill - animated width transition */
-.progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-  border-radius: var(--radius-full);
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              background-color var(--transition-base);
-  min-width: 0;
-}
-
-.progress-label {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
-  font-weight: 500;
-  transition: color var(--transition-base);
-}
-
-/* Task add form */
-.task-form {
-  display: flex;
-  gap: var(--space-2);
-}
-
-.task-form .task-input {
-  flex: 1;
-  min-width: 0;
-}
-
-/* Task error message */
-.task-error {
-  font-size: var(--font-size-xs);
-  color: var(--color-error);
-  font-weight: 500;
-  padding: var(--space-1) 0;
-}
-
-.task-error[hidden] {
-  display: none;
-}
-
-/* Task list */
-.task-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  max-height: 320px;
-  overflow-y: auto;
-  padding-right: var(--space-1);
-}
-
-/* Scrollbar styling */
-.task-list::-webkit-scrollbar {
-  width: 4px;
-}
-
-.task-list::-webkit-scrollbar-track {
-  background: var(--color-border);
-  border-radius: var(--radius-full);
-}
-
-.task-list::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
-  border-radius: var(--radius-full);
-}
-
-/* Individual task item */
-.task-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  background-color: var(--color-surface-alt);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  transition: background-color var(--transition-fast), border-color var(--transition-fast);
-}
-
-.task-item:hover {
-  border-color: var(--color-primary);
-}
-
-.task-item input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-  accent-color: var(--color-primary);
-  cursor: pointer;
-}
-
-.task-item-text {
-  flex: 1;
-  font-size: var(--font-size-sm);
-  color: var(--color-text);
-  word-break: break-word;
-  transition: color var(--transition-fast);
-}
-
-.task-item--done .task-item-text {
-  text-decoration: line-through;
-  color: var(--color-text-muted);
-}
-
-.task-item-delete {
-  flex-shrink: 0;
-  opacity: 0;
-  transition: opacity var(--transition-fast);
-}
-
-.task-item:hover .task-item-delete,
-.task-item:focus-within .task-item-delete {
-  opacity: 1;
-}
-
-/* ==========================================================================
-   13. Links Card
-   ========================================================================== */
-
-.links-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+/* ─── Quick Links Card ───────────────────────────────────────── */
+.quick-links-card {
+  /* full-width below the grid */
 }
 
 .links-panel {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  min-height: 40px;
-}
-
-/* Individual link button wrapper */
-.link-item {
-  position: relative;
-  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   align-items: center;
 }
 
-/* The main link button */
-.link-btn {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  background-color: var(--color-surface-alt);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
-  font-weight: 500;
+.btn-link {
+  background: transparent;
+  border: 1.5px solid var(--primary);
+  color: var(--primary-dark);
+  border-radius: var(--radius-pill);
+  padding: 7px 18px;
+  font-size: 0.875rem;
+  font-weight: 600;
   cursor: pointer;
-  text-align: left;
-  transition: background-color var(--transition-fast),
-              border-color var(--transition-fast),
-              color var(--transition-fast);
-  font-family: var(--font-family);
-  word-break: break-word;
+  transition: background var(--transition), color var(--transition);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.link-btn:hover {
-  background-color: var(--color-primary-light);
-  border-color: var(--color-primary);
-  color: var(--color-primary);
+.btn-link:hover {
+  background: var(--primary-light);
+  color: var(--primary-dark);
 }
 
-/* Edit/delete icon buttons revealed on hover */
-.link-actions {
+body.dark-mode .btn-link {
+  color: var(--primary);
+}
+
+body.dark-mode .btn-link:hover {
+  background: var(--primary-light);
+  color: var(--text);
+}
+
+.btn-add-link {
+  background: transparent;
+  border: 1.5px dashed var(--primary);
+  color: var(--primary);
+  border-radius: var(--radius-pill);
+  padding: 7px 18px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), border-style var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-add-link:hover {
+  background: var(--primary-light);
+  border-style: solid;
+}
+
+/* ─── General Buttons ────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--transition);
+  user-select: none;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border: 1.5px solid var(--primary);
+  border-radius: var(--radius-sm);
+  padding: 8px 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  border-radius: var(--radius-sm);
+  padding: 8px 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--primary-light);
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+.btn-icon:hover:not(:disabled) {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.btn-add {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.btn-add:hover {
+  background: var(--primary-dark);
+}
+
+/* ─── Set Name Modal ─────────────────────────────────────────── */
+.set-name-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
-  gap: var(--space-1);
-  margin-left: var(--space-2);
-  opacity: 0;
-  transition: opacity var(--transition-fast);
-  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
 }
 
-.link-item:hover .link-actions,
-.link-item:focus-within .link-actions {
-  opacity: 1;
-}
-
-/* Inline add/edit link form */
-.link-form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  padding: var(--space-3);
-  background-color: var(--color-surface-alt);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  transition: background-color var(--transition-base), border-color var(--transition-base);
-}
-
-.link-form-row {
-  display: flex;
-  gap: var(--space-2);
-}
-
-.link-form-row .btn {
-  flex-shrink: 0;
-}
-
-.link-form-error {
-  font-size: var(--font-size-xs);
-  color: var(--color-error);
-  font-weight: 500;
-}
-
-.link-form-error:empty {
+.set-name-modal[hidden] {
   display: none;
 }
 
-/* ==========================================================================
-   14. Settings Card
-   ========================================================================== */
+.set-name-modal-card {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  min-width: 320px;
+  position: relative;
+  box-shadow: var(--shadow-modal);
+  border: 1px solid var(--border);
+}
 
-.settings-card {
+.set-name-modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.set-name-modal-row {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
+  gap: 8px;
 }
 
-.settings-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.settings-label {
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.settings-row {
-  display: flex;
-  gap: var(--space-2);
-  align-items: center;
-}
-
-.settings-row .settings-input {
+.set-name-input {
   flex: 1;
-  min-width: 0;
+  padding: 8px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  outline: none;
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color var(--transition);
 }
 
-/* ==========================================================================
-   15. Modal - Backdrop and Card
-   ========================================================================== */
+.set-name-input::placeholder {
+  color: var(--text-muted);
+}
 
-/* Semi-transparent full-viewport backdrop */
+.set-name-input:focus {
+  border-color: var(--primary);
+}
+
+.set-name-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  line-height: 1;
+  transition: color var(--transition);
+}
+
+.set-name-modal-close:hover {
+  color: var(--text);
+}
+
+/* ─── Edit Tasks Modal ───────────────────────────────────────── */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(15, 10, 26, 0.65);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 100;
-  animation: fadeIn var(--transition-base) ease;
 }
 
-/* Modal card - centered, scrollable */
+.modal-backdrop[hidden] {
+  display: none;
+}
+
+.modal-card {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 28px 32px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: var(--shadow-modal);
+  border: 1px solid var(--border);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: color var(--transition), background var(--transition);
+}
+
+.modal-close:hover {
+  color: var(--text);
+  background: var(--primary-light);
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  transition: border-color var(--transition);
+}
+
+.modal-task-item:hover {
+  border-color: var(--primary);
+}
+
+.modal-task-text {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+/* ─── Notification Banner ────────────────────────────────────── */
+.notification-banner {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--gradient-progress);
+  color: #fff;
+  border-radius: var(--radius-card);
+  padding: 14px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(155, 89, 182, 0.35);
+  z-index: 300;
+  max-width: 320px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideInUp 0.25s ease;
+}
+
+.notification-banner[hidden] {
+  display: none;
+}
+
+.notification-banner-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  margin-left: auto;
+  flex-shrink: 0;
+  transition: color var(--transition);
+}
+
+.notification-banner-close:hover {
+  color: #fff;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Responsive — Mobile ────────────────────────────────────── */
+@media (max-width: 700px) {
+  .navbar {
+    padding: 0 16px;
+  }
+
+  .main-content {
+    padding: 16px;
+  }
+
+  .welcome-heading {
+    font-size: 1.5rem;
+    margin-bottom: 14px;
+  }
+
+  .clock-hero {
+    min-height: 140px;
+    border-radius: 16px;
+    padding: 24px 16px;
+  }
+
+  .clock-time {
+    font-size: 2.8rem;
+  }
+
+  .clock-date {
+    font-size: 0.95rem;
+  }
+
+  /* Stack sparkles off-screen on small screens to avoid overflow */
+  .sparkle-left-1,
+  .sparkle-left-2,
+  .sparkle-left-3 {
+    left: 12px;
+  }
+
+  .sparkle-right-1,
+  .sparkle-right-2,
+  .sparkle-right-3 {
+    right: 12px;
+  }
+
+  .main-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .timer-display {
+    font-size: 3.5rem;
+  }
+
+  .modal-card {
+    margin: 16px;
+    padding: 20px;
+    max-height: 90vh;
+  }
+
+  .notification-banner {
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-brand {
+    font-size: 1.15rem;
+  }
+
+  .btn-outline-nav,
+  .btn-filled-nav {
+    padding: 5px 12px;
+    font-size: 0.8rem;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .clock-time {
+    font-size: 2.4rem;
+  }
+
+  .timer-display {
+    font-size: 3rem;
+  }
+}
+
+/* --- Tasks Header --------------------------------------------- */
+.tasks-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tasks-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* --- Progress Row (inside tasks card) ------------------------ */
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 8px;
+  background: var(--border);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gradient-progress);
+  border-radius: 9999px;
+  transition: width 0.4s ease;
+  min-width: 0;
+}
+
+.progress-pct {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  white-space: nowrap;
+  min-width: 34px;
+  text-align: right;
+}
+
+/* --- Timer Card Title ----------------------------------------- */
+.timer-card-title {
+  align-self: flex-start;
+  margin-bottom: 8px;
+}
+
+/* --- Sparkle on Timer Card ------------------------------------ */
+.sparkle-timer {
+  width: 70px;
+  height: 70px;
+  right: 16px;
+  bottom: 24px;
+  top: auto;
+  transform: rotate(45deg);
+  border-radius: 6px;
+  background: rgba(192, 132, 200, 0.12);
+}
+
+/* --- Edit Tasks Modal ----------------------------------------- */
 .edit-tasks-modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 101;
-  width: min(600px, calc(100vw - 2rem));
+  width: min(560px, calc(100vw - 2rem));
   max-height: min(80vh, 640px);
   display: flex;
   flex-direction: column;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
   box-shadow: var(--shadow-modal);
   overflow: hidden;
-  animation: slideUp var(--transition-base) ease;
-  transition: background-color var(--transition-base), border-color var(--transition-base);
 }
 
-/* Modal header */
-.modal-header {
+.modal-sort-bar {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-4) var(--space-6);
-  border-bottom: 1px solid var(--color-border);
-  flex-shrink: 0;
-  background-color: var(--color-surface);
-  transition: background-color var(--transition-base), border-color var(--transition-base);
-}
-
-.modal-title {
-  font-size: var(--font-size-lg);
-  font-weight: 700;
-  color: var(--color-text);
-}
-
-.modal-close {
-  background: transparent;
-  border: none;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xl);
-  cursor: pointer;
-  padding: var(--space-1);
-  border-radius: var(--radius-sm);
-  line-height: 1;
-  transition: color var(--transition-fast), background-color var(--transition-fast);
-}
-
-.modal-close:hover {
-  color: var(--color-text);
-  background-color: var(--color-primary-light);
-}
-
-/* Sort controls */
-.modal-sort-controls {
-  display: flex;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-6);
-  border-bottom: 1px solid var(--color-border);
+  gap: 8px;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border);
   flex-shrink: 0;
   flex-wrap: wrap;
-  background-color: var(--color-surface-alt);
-  transition: background-color var(--transition-base), border-color var(--transition-base);
+  background: var(--bg);
+}
+
+.modal-sort-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  align-self: center;
 }
 
 .sort-btn {
-  padding: var(--space-1) var(--space-3);
-  font-size: var(--font-size-xs);
+  padding: 4px 14px;
+  font-size: 0.78rem;
   font-weight: 600;
-  background-color: transparent;
-  color: var(--color-text-muted);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
   cursor: pointer;
-  font-family: var(--font-family);
-  transition: background-color var(--transition-fast),
-              color var(--transition-fast),
-              border-color var(--transition-fast);
+  font-family: inherit;
+  transition: all var(--transition);
 }
 
 .sort-btn:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .sort-btn--active {
-  background-color: var(--color-primary);
-  color: var(--color-text-inverse);
-  border-color: var(--color-primary);
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
 }
 
-/* Scrollable task list inside modal */
 .modal-task-list {
   flex: 1;
   overflow-y: auto;
-  padding: var(--space-4) var(--space-6);
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 8px;
+  list-style: none;
 }
 
-.modal-task-list::-webkit-scrollbar {
-  width: 4px;
-}
-
-.modal-task-list::-webkit-scrollbar-track {
-  background: var(--color-border);
-  border-radius: var(--radius-full);
-}
-
-.modal-task-list::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
-  border-radius: var(--radius-full);
-}
-
-/* Modal task row */
 .modal-task-row {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  background-color: var(--color-surface-alt);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition);
 }
 
 .modal-task-row:hover {
-  border-color: var(--color-primary);
+  border-color: var(--primary);
 }
 
 .modal-task-label {
   flex: 1;
-  font-size: var(--font-size-sm);
-  color: var(--color-text);
+  font-size: 0.875rem;
+  color: var(--text);
   word-break: break-word;
 }
 
-.modal-task-label--done {
+.modal-task-row--done .modal-task-label {
   text-decoration: line-through;
-  color: var(--color-text-muted);
+  color: var(--text-muted);
 }
 
-/* Inline edit input inside modal row */
-.modal-task-edit-input {
+.modal-edit-input {
   flex: 1;
-  padding: var(--space-1) var(--space-2);
-  font-size: var(--font-size-sm);
-  color: var(--color-text);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-primary);
-  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font-size: 0.875rem;
+  border: 1.5px solid var(--primary);
+  border-radius: 6px;
   outline: none;
-  font-family: var(--font-family);
-  box-shadow: 0 0 0 2px rgba(233, 30, 140, 0.15);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
 }
 
-.modal-task-row-error {
-  font-size: var(--font-size-xs);
-  color: var(--color-error);
-  margin-top: var(--space-1);
+.modal-inline-error {
+  font-size: 0.75rem;
+  color: #e53e3e;
   display: block;
+  margin-top: 4px;
 }
 
-/* Modal footer */
-.modal-footer {
-  padding: var(--space-3) var(--space-6);
-  border-top: 1px solid var(--color-border);
-  flex-shrink: 0;
-  background-color: var(--color-surface);
-  transition: background-color var(--transition-base), border-color var(--transition-base);
-}
-
-/* ==========================================================================
-   16. Animations
-   ========================================================================== */
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translate(-50%, calc(-50% + 16px));
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-}
-
-/* ==========================================================================
-   17. Notification Banner (in-page timer complete notification)
-   ========================================================================== */
-
-.notification-banner {
-  position: fixed;
-  bottom: var(--space-6);
-  right: var(--space-6);
-  z-index: 200;
-  max-width: 360px;
-  padding: var(--space-4) var(--space-5);
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-  color: var(--color-text-inverse);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
+/* --- Link form styles ----------------------------------------- */
+.link-form {
   display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  animation: slideInRight 0.3s ease;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-top: 4px;
 }
 
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.link-form-label-input,
+.link-form-url-input {
+  padding: 7px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+  font-family: inherit;
+  transition: border-color var(--transition);
 }
 
-.notification-banner-close {
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.8);
+.link-form-label-input:focus,
+.link-form-url-input:focus {
+  border-color: var(--primary);
+}
+
+.link-form-error {
+  font-size: 0.75rem;
+  color: #e53e3e;
+}
+
+.link-form-error:empty {
+  display: none;
+}
+
+.link-form-save-btn,
+.link-form-cancel-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
   cursor: pointer;
-  font-size: var(--font-size-lg);
-  line-height: 1;
-  padding: 0;
-  margin-left: auto;
-  flex-shrink: 0;
+  font-family: inherit;
+  transition: all var(--transition);
 }
 
-.notification-banner-close:hover {
-  color: var(--color-text-inverse);
+.link-form-save-btn {
+  background: var(--primary);
+  color: #fff;
+  border: 1.5px solid var(--primary);
 }
 
-/* ==========================================================================
-   18. Responsive Adjustments
-   ========================================================================== */
-
-@media (max-width: 480px) {
-  .dashboard {
-    padding: var(--space-4) var(--space-3);
-  }
-
-  .card {
-    padding: var(--space-4);
-  }
-
-  .hero-card {
-    padding: var(--space-6) var(--space-4);
-  }
-
-  .timer-display {
-    font-size: var(--font-size-3xl);
-    min-width: 130px;
-  }
-
-  .notification-banner {
-    bottom: var(--space-4);
-    right: var(--space-3);
-    left: var(--space-3);
-    max-width: none;
-  }
-
-  .edit-tasks-modal {
-    width: calc(100vw - 1rem);
-    max-height: 90vh;
-  }
+.link-form-save-btn:hover {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
 }
 
-@media (max-width: 360px) {
-  .timer-controls {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .settings-row {
-    flex-direction: column;
-    align-items: stretch;
-  }
+.link-form-cancel-btn {
+  background: transparent;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
 }
+
+.link-form-cancel-btn:hover {
+  background: var(--primary-light);
+}
+
+/* --- Link button wrapper -------------------------------------- */
+.link-btn-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.link-edit-btn,
+.link-delete-btn {
+  padding: 3px 6px;
+  font-size: 0.75rem;
+}
+
+
+/* --- Task item done state ------------------------------------- */
+.task-item--done .task-text {
+  text-decoration: line-through;
+  color: #8b6fa0;
+}
+
+/* --- Dark mode history/modal card ---------------------------- */
+body.dark-mode .history-backdrop > div {
+  background: #2d1b4e !important;
+  border-color: #5a3a7a !important;
+  color: #f0e8ff !important;
+}
+

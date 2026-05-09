@@ -144,7 +144,7 @@ const ClockModule = {
   },
 
   /**
-   * Internal tick: reads current time and updates all three DOM elements.
+   * Internal tick: reads current time and updates clock DOM elements.
    * @private
    */
   _tick() {
@@ -152,19 +152,9 @@ const ClockModule = {
 
     const timeEl = document.getElementById('clock-time');
     const dateEl = document.getElementById('clock-date');
-    const greetingEl = document.getElementById('greeting');
 
     if (timeEl) timeEl.textContent = this.formatTime(now);
     if (dateEl) dateEl.textContent = this.formatDate(now);
-    if (greetingEl) {
-      const greeting = this.getGreeting(now.getHours());
-      // SettingsModule.getName() will be wired up once SettingsModule is implemented.
-      // Fall back gracefully if SettingsModule is not yet available.
-      const name = (typeof SettingsModule !== 'undefined' && typeof SettingsModule.getName === 'function')
-        ? SettingsModule.getName()
-        : 'Friend';
-      greetingEl.textContent = greeting + ', ' + name + '!';
-    }
   },
 
   /**
@@ -254,6 +244,11 @@ const SettingsModule = {
     }
     // Apply the restored theme (Requirement 6.5)
     this.applyTheme(this._settings.theme);
+    // Set welcome heading
+    const greetingEl = document.getElementById('greeting');
+    if (greetingEl) {
+      greetingEl.textContent = 'Welcome Back, ' + this._settings.name + '!';
+    }
   },
 
   /**
@@ -265,19 +260,10 @@ const SettingsModule = {
     const trimmed = (typeof name === 'string') ? name.trim() : 'Friend';
     this._settings.name = trimmed || 'Friend';
     StorageService.set(StorageService.KEYS.SETTINGS, this._settings);
-    // Update greeting immediately by triggering ClockModule's tick
-    if (typeof ClockModule !== 'undefined' && typeof ClockModule._tick === 'function') {
-      ClockModule._tick();
-    } else {
-      // Fallback: update the greeting element directly
-      const greetingEl = document.getElementById('greeting');
-      if (greetingEl) {
-        const now = new Date();
-        const greeting = (typeof ClockModule !== 'undefined' && typeof ClockModule.getGreeting === 'function')
-          ? ClockModule.getGreeting(now.getHours())
-          : 'Hello';
-        greetingEl.textContent = greeting + ', ' + this._settings.name + '!';
-      }
+    // Update greeting immediately
+    const greetingEl = document.getElementById('greeting');
+    if (greetingEl) {
+      greetingEl.textContent = 'Welcome Back, ' + this._settings.name + '!';
     }
   },
 
@@ -314,6 +300,11 @@ const SettingsModule = {
       document.body.classList.add('dark-mode');
     } else {
       document.body.classList.remove('dark-mode');
+    }
+    // Update the navbar theme toggle button label
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (toggleBtn) {
+      toggleBtn.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
     }
   },
 
@@ -772,7 +763,7 @@ const TasksModule = {
     }
 
     if (labelEl) {
-      labelEl.textContent = progress.percent + '% complete';
+      labelEl.textContent = progress.percent + '%';
     }
   },
 
@@ -863,30 +854,20 @@ function sortTasks(tasks, strategy) {
  * (Requirements 4.1–4.14)
  */
 const TaskModal = {
-  /** @type {"default"|"az"|"done-last"} */
-  _currentSort: 'default',
 
   /**
    * Open the Edit Tasks modal.
-   * Guards against double-open by checking for an existing .edit-tasks-modal.
-   * (Requirements 4.1, 4.12)
    * @param {Array} tasks  The current tasks array from TasksModule
    */
   open(tasks) {
     // Guard: do not open a second modal if one is already present
     if (document.querySelector('.edit-tasks-modal')) return;
 
-    this._currentSort = 'default';
-
     // ── Backdrop ──────────────────────────────────────────────────────────────
     const backdrop = document.createElement('div');
     backdrop.className = 'modal-backdrop';
-    // Clicking the backdrop closes the modal (Requirement 4.11)
     backdrop.addEventListener('click', (e) => {
-      // Only close when the backdrop itself is clicked, not children
-      if (e.target === backdrop) {
-        this.close();
-      }
+      if (e.target === backdrop) this.close();
     });
     document.body.appendChild(backdrop);
 
@@ -910,44 +891,10 @@ const TaskModal = {
     closeBtn.className = 'modal-close btn btn-icon';
     closeBtn.setAttribute('aria-label', 'Close modal');
     closeBtn.textContent = '×';
-    // X button closes the modal (Requirement 4.10)
     closeBtn.addEventListener('click', () => this.close());
 
     header.appendChild(title);
     header.appendChild(closeBtn);
-
-    // ── Sort controls ─────────────────────────────────────────────────────────
-    // (Requirements 4.3, 4.4)
-    const sortBar = document.createElement('div');
-    sortBar.className = 'modal-sort-bar';
-
-    const sortLabel = document.createElement('span');
-    sortLabel.className = 'modal-sort-label';
-    sortLabel.textContent = 'Sort: ';
-
-    const sortStrategies = [
-      { strategy: 'default', label: 'Default' },
-      { strategy: 'az',      label: 'A–Z'     },
-      { strategy: 'done-last', label: 'Done Last' },
-    ];
-
-    const sortButtons = [];
-    for (const { strategy, label } of sortStrategies) {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'sort-btn btn btn-secondary' + (strategy === 'default' ? ' sort-btn--active' : '');
-      btn.dataset.strategy = strategy;
-      btn.textContent = label;
-      btn.addEventListener('click', () => {
-        this.setSortStrategy(strategy, tasks);
-        // Update active state on sort buttons
-        for (const sb of sortButtons) {
-          sb.classList.toggle('sort-btn--active', sb.dataset.strategy === strategy);
-        }
-      });
-      sortButtons.push(btn);
-      sortBar.appendChild(btn);
-    }
 
     // ── Task list container ───────────────────────────────────────────────────
     const taskListContainer = document.createElement('ul');
@@ -955,46 +902,29 @@ const TaskModal = {
 
     // ── Assemble modal ────────────────────────────────────────────────────────
     modal.appendChild(header);
-    modal.appendChild(sortLabel);
-    modal.appendChild(sortBar);
     modal.appendChild(taskListContainer);
 
     document.body.appendChild(modal);
 
-    // Render initial rows
+    // Render rows
     this.renderRows(tasks);
 
-    // ── Focus trap (Requirements 4.13) ────────────────────────────────────────
+    // ── Focus trap ────────────────────────────────────────────────────────────
     modal.addEventListener('keydown', (e) => {
       if (e.key !== 'Tab') return;
-
       const focusable = Array.from(
-        modal.querySelectorAll(
-          'button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
-        )
+        modal.querySelectorAll('button:not([disabled]), input:not([disabled])')
       ).filter(el => el.offsetParent !== null || el === closeBtn);
-
       if (focusable.length === 0) return;
-
       const first = focusable[0];
       const last  = focusable[focusable.length - 1];
-
       if (e.shiftKey) {
-        // Shift+Tab: if focus is on first element, wrap to last
-        if (document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        }
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
       } else {
-        // Tab: if focus is on last element, wrap to first
-        if (document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
+        if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
       }
     });
 
-    // Move focus to the close button (Requirement 4.12)
     closeBtn.focus();
   },
 
@@ -1023,14 +953,13 @@ const TaskModal = {
     const container = modal.querySelector('.modal-task-list');
     if (!container) return;
 
-    // Clear existing rows
     while (container.firstChild) {
       container.removeChild(container.firstChild);
     }
 
-    const sorted = sortTasks(tasks, this._currentSort);
+    const taskArray = Array.isArray(tasks) ? tasks : TasksModule._tasks;
 
-    for (const task of sorted) {
+    for (const task of taskArray) {
       const row = document.createElement('li');
       row.className = 'modal-task-row' + (task.done ? ' modal-task-row--done' : '');
       row.dataset.id = task.id;
@@ -1217,16 +1146,6 @@ const TaskModal = {
     row.appendChild(deleteBtn);
   },
 
-  /**
-   * Update the current sort strategy and re-render rows.
-   * Does NOT mutate the persisted tasks array (Requirement 4.4).
-   * @param {string} strategy  "default" | "az" | "done-last"
-   * @param {Array}  tasks     Tasks array to sort and display
-   */
-  setSortStrategy(strategy, tasks) {
-    this._currentSort = strategy;
-    this.renderRows(tasks || TasksModule._tasks);
-  },
 };
 
 // ─── TasksModule — delegate openEditModal / closeEditModal to TaskModal ────────
@@ -1428,7 +1347,7 @@ const LinksModule = {
       // Main link button — textContent only (Requirement 8.1)
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'btn link-btn';
+      btn.className = 'btn btn-link';
       btn.textContent = link.label;
       btn.setAttribute('aria-label', 'Open ' + link.label);
       btn.addEventListener('click', () => {
@@ -1479,7 +1398,7 @@ const LinksModule = {
     const addBtn = document.createElement('button');
     addBtn.type = 'button';
     addBtn.id = 'add-link-btn';
-    addBtn.className = 'btn btn-secondary link-add-btn';
+    addBtn.className = 'btn btn-add-link';
     addBtn.textContent = '+ Add Link';
     addBtn.addEventListener('click', () => {
       this.showAddForm();
@@ -1780,13 +1699,60 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Display name save (Requirement 6.2)
+  // Set Name — open modal when navbar button clicked
   const setNameBtn = document.getElementById('set-name-btn');
-  if (setNameBtn) {
+  const setNameModal = document.getElementById('set-name-modal');
+  if (setNameBtn && setNameModal) {
     setNameBtn.addEventListener('click', function () {
+      setNameModal.removeAttribute('hidden');
+      const nameInput = document.getElementById('name-input');
+      if (nameInput) {
+        nameInput.value = SettingsModule.getName() === 'Friend' ? '' : SettingsModule.getName();
+        nameInput.focus();
+      }
+    });
+  }
+
+  // Save name from modal
+  const saveNameBtn = document.getElementById('save-name-btn');
+  if (saveNameBtn) {
+    saveNameBtn.addEventListener('click', function () {
       const nameInput = document.getElementById('name-input');
       if (nameInput) {
         SettingsModule.setName(nameInput.value);
+      }
+      if (setNameModal) setNameModal.setAttribute('hidden', '');
+    });
+  }
+
+  // Close name modal
+  const closeNameModalBtn = document.getElementById('close-name-modal-btn');
+  if (closeNameModalBtn && setNameModal) {
+    closeNameModalBtn.addEventListener('click', function () {
+      setNameModal.setAttribute('hidden', '');
+    });
+  }
+
+  // Close name modal on backdrop click
+  if (setNameModal) {
+    setNameModal.addEventListener('click', function (e) {
+      if (e.target === setNameModal) {
+        setNameModal.setAttribute('hidden', '');
+      }
+    });
+  }
+
+  // Allow Enter key to save name
+  const nameInputEl = document.getElementById('name-input');
+  if (nameInputEl) {
+    nameInputEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        SettingsModule.setName(nameInputEl.value);
+        if (setNameModal) setNameModal.setAttribute('hidden', '');
+      }
+      if (e.key === 'Escape') {
+        if (setNameModal) setNameModal.setAttribute('hidden', '');
       }
     });
   }
@@ -1818,6 +1784,71 @@ document.addEventListener('DOMContentLoaded', function () {
   if (editTasksBtn) {
     editTasksBtn.addEventListener('click', function () {
       TasksModule.openEditModal();
+    });
+  }
+
+  // History button — show completed tasks modal
+  const historyBtn = document.getElementById('history-btn');
+  if (historyBtn) {
+    historyBtn.addEventListener('click', function () {
+      const existing = document.querySelector('.history-backdrop');
+      if (existing) { existing.remove(); return; }
+
+      const history = TasksModule.getHistory();
+
+      const backdrop = document.createElement('div');
+      backdrop.className = 'history-backdrop';
+      backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:100;';
+
+      const card = document.createElement('div');
+      card.style.cssText = 'background:#fff;border-radius:16px;padding:28px 32px;width:100%;max-width:480px;max-height:70vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);border:1px solid #e8d5f0;';
+
+      const header = document.createElement('div');
+      header.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;';
+
+      const title = document.createElement('h2');
+      title.style.cssText = 'font-size:1.1rem;font-weight:700;color:#2d1b3d;';
+      title.textContent = 'Completed Tasks';
+
+      const closeBtn = document.createElement('button');
+      closeBtn.style.cssText = 'background:none;border:none;font-size:1.5rem;cursor:pointer;color:#8b6fa0;line-height:1;padding:0 4px;';
+      closeBtn.textContent = '×';
+      closeBtn.setAttribute('aria-label', 'Close history');
+      closeBtn.addEventListener('click', function () { backdrop.remove(); });
+
+      header.appendChild(title);
+      header.appendChild(closeBtn);
+      card.appendChild(header);
+
+      if (history.length === 0) {
+        const empty = document.createElement('p');
+        empty.style.cssText = 'color:#8b6fa0;font-size:0.9rem;text-align:center;padding:24px 0;';
+        empty.textContent = 'No completed tasks yet.';
+        card.appendChild(empty);
+      } else {
+        const list = document.createElement('ul');
+        list.style.cssText = 'list-style:none;display:flex;flex-direction:column;gap:6px;';
+        for (const task of history) {
+          const item = document.createElement('li');
+          item.style.cssText = 'display:flex;align-items:center;gap:8px;padding:8px 4px;font-size:0.9rem;color:#8b6fa0;';
+          const check = document.createElement('span');
+          check.textContent = '✓';
+          check.style.cssText = 'color:#c084c8;font-weight:700;flex-shrink:0;';
+          const text = document.createElement('span');
+          text.style.cssText = 'text-decoration:line-through;';
+          text.textContent = task.text;
+          item.appendChild(check);
+          item.appendChild(text);
+          list.appendChild(item);
+        }
+        card.appendChild(list);
+      }
+
+      backdrop.appendChild(card);
+      backdrop.addEventListener('click', function (e) {
+        if (e.target === backdrop) backdrop.remove();
+      });
+      document.body.appendChild(backdrop);
     });
   }
 
@@ -1886,7 +1917,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const labelEl = document.getElementById('progress-label');
     if (labelEl) {
-      labelEl.textContent = progress.percent + '% complete';
+      labelEl.textContent = progress.percent + '%';
     }
   });
 

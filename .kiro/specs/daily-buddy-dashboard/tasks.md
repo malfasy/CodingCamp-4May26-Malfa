@@ -195,7 +195,7 @@ Implement the DailyBuddy Dashboard as three plain files — `index.html`, `css/s
     - **Property 10: XSS prevention** — for any arbitrary string input (including `<script>`, `<img onerror>`, etc.), no user-supplied string is ever assigned to `innerHTML`; verify all task text, link labels, and display names are set via `textContent` or safe DOM attributes
     - **Validates: Requirements 8.1, 8.4**
 
-- [ ] 13. Final checkpoint — Ensure all tests pass
+- [x] 13. Final checkpoint — Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
 ## Notes
